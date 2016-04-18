@@ -1,0 +1,10 @@
+*.sqlite3
+.DS_Store
+.idea
+*.pyc
+*/*.pyc
+*/*/*.pyc
+.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+*.sql
