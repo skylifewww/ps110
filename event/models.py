@@ -8,6 +8,18 @@ from django.utils import timezone
 
 # Create your models here.
 
+class Classroom(models.Model):
+
+	name = models.CharField(max_length=200)
+	teacher_name = models.CharField(max_length=200)
+	teacher_email = models.EmailField(max_length=120)
+	def __str__(self):
+		return self.teacher_email
+
+
+
+
+
 class Parent(models.Model):
 
 	name = models.CharField(max_length=200)
