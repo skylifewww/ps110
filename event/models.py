@@ -8,6 +8,21 @@ from django.utils import timezone
 
 # Create your models here.
 
+class Event(models.Model):
+
+	title = models.CharField(max_length=200)
+	description = models.TextField(max_length=2200)
+	location = models.CharField(max_length=200)
+	event_date = models.DateTimeField(default=timezone.now())
+	event_length = models.IntegerField(max_length=200)
+	classroom = models.CharField(max_length=200)
+	def __str__(self):
+		return self.classroom
+
+
+
+
+
 class Classroom(models.Model):
 
 	name = models.CharField(max_length=200)
