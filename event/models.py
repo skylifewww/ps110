@@ -79,3 +79,11 @@ class ParentForm(forms.ModelForm):
 		fields = ['name', 'phone', 'child_name', 'classrooms', 'created']
 
 
+
+class ClassroomForm(forms.ModelForm):
+
+	class Meta:
+		model = Classroom
+		fields = ['name', 'teacher_name', 'teacher_email']
+
+
