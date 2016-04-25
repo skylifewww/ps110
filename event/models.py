@@ -87,3 +87,11 @@ class ClassroomForm(forms.ModelForm):
 		fields = ['name', 'teacher_name', 'teacher_email']
 
 
+
+class EventForm(forms.ModelForm):
+
+	class Meta:
+		model = Event
+		fields = ['title', 'description', 'location', 'event_date', 'event_length', 'classroom']
+
+
