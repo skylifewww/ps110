@@ -71,3 +71,11 @@ class ActivityForm(forms.ModelForm):
 		fields = ['user', 'created', 'event']
 
 
+
+class ParentForm(forms.ModelForm):
+
+	class Meta:
+		model = Parent
+		fields = ['name', 'phone', 'child_name', 'classrooms', 'created']
+
+
