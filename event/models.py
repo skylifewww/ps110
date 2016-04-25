@@ -3,6 +3,9 @@ from __future__ import unicode_literals
 from django.db import models
 
 
+from django import forms
+
+
 from jsonfield import JSONField
 from django.utils import timezone
 
@@ -58,5 +61,13 @@ class Activity(models.Model):
 		return self.event
 
 
+
+
+
+class ActivityForm(forms.ModelForm):
+
+	class Meta:
+		model = Activity
+		fields = ['user', 'created', 'event']
 
 
