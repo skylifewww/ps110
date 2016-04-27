@@ -19,8 +19,12 @@ from django.conf.urls import url, include
 
 
 from django.contrib import admin
+from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+	url(r'^home/', 'ps110.views.home', name='home'),
+	url('', include('social.apps.django_app.urls', namespace='social')),
+	url('', include('django.contrib.auth.urls', namespace='auth')),
 	url('', include('event.urls', namespace='event')),
 ]
