@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	'social.apps.django_app.default',
 	'event.apps.EventConfig',
 
     'django.contrib.admin',
