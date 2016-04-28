@@ -22,6 +22,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
 	url(r'^home/', 'ps110.views.home', name='home'),
