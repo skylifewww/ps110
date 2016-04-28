@@ -22,6 +22,7 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
+	url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
 	url(r'^home/', 'ps110.views.home', name='home'),
 	url('', include('social.apps.django_app.urls', namespace='social')),
