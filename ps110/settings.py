@@ -49,6 +49,8 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
+	'rest_framework.authtoken',
+
 	'rest_framework',
 
 	'social.apps.django_app.default',
