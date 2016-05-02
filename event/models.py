@@ -11,6 +11,15 @@ from django.utils import timezone
 
 # Create your models here.
 
+
+
+@receiver(post_save, sender=User)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+	if created:
+		Token.objects.create(user=instance)
+
+
+
 class Event(models.Model):
 
 	title = models.CharField(max_length=200)
