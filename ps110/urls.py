@@ -20,6 +20,10 @@ from django.conf.urls import url, include
 
 from django.contrib import admin
 from . import views
+from event.models import Activity
+from rest_framework import routers, serializers, viewsets
+
+
 
 urlpatterns = [
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
