@@ -20,6 +20,7 @@ from django.conf.urls import url, include
 
 from django.contrib import admin
 from . import views
+from event.models import Classroom
 from event.models import Parent
 from event.models import Activity
 from rest_framework import routers, serializers, viewsets
