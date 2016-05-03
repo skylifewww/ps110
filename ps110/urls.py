@@ -25,6 +25,8 @@ from event.models import Classroom
 from event.models import Parent
 from event.models import Activity
 from rest_framework import routers, serializers, viewsets
+router = routers.DefaultRouter()
+
 
 
 
