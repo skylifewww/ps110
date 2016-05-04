@@ -26,6 +26,7 @@ from event.models import Parent
 from event.models import Activity
 from rest_framework import routers, serializers, viewsets
 router = routers.DefaultRouter()
+router.register(r'classrooms', ClassroomViewSet)
 router.register(r'parents', ParentViewSet)
 router.register(r'activitys', ActivityViewSet)
 
