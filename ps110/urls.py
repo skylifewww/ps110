@@ -26,6 +26,18 @@ from event.models import Parent
 from event.models import Activity
 from rest_framework import routers, serializers, viewsets
 
+class classroomSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Classroom
+		fields = ['name', 'teacher_name', 'teacher_email']
+
+
+
+class ClassroomViewSet(viewsets.ModelViewSet):
+	queryset = Classroom.objects.all()
+	serializer_class = classroomSerializer
+
+
 class parentSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Parent
