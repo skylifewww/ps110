@@ -89,5 +89,8 @@ urlpatterns = [
 	url(r'^home/', 'ps110.views.home', name='home'),
 	url('', include('social.apps.django_app.urls', namespace='social')),
 	url('', include('django.contrib.auth.urls', namespace='auth')),
+	url(r'^api/', include(router.urls)),
+	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+	url(r'^api-token-auth/', obtain_jwt_token),
 	url('', include('event.urls', namespace='event')),
 ]
