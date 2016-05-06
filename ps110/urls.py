@@ -85,6 +85,7 @@ router.register(r'activitys', ActivityViewSet)
 
 
 urlpatterns = [
+	url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico')),
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
