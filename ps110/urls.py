@@ -94,6 +94,7 @@ urlpatterns = [
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
+url(r'^api/facebook_auth', 'school.views.facebook_auth'),
 	url(r'^home/', 'ps110.views.home', name='home'),
 	url('', include('social.apps.django_app.urls', namespace='social')),
 	url('', include('django.contrib.auth.urls', namespace='auth')),
