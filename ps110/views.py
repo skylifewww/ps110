@@ -1,6 +1,8 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
+import facebook
+
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from rest_framework.authtoken.models import Token
