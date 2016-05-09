@@ -87,6 +87,9 @@ router.register(r'activitys', ActivityViewSet)
 
 
 urlpatterns = [
+
+	url(r'^api/register', 'school.views.create_auth'),
+
 	url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico')),
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),
