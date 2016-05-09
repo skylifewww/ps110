@@ -25,6 +25,8 @@ from event.models import Classroom
 from event.models import Parent
 from event.models import Activity
 from rest_framework import routers, serializers, viewsets
+from django.views.generic.base import RedirectView
+
 from rest_framework_jwt.views import obtain_jwt_token
 
 
