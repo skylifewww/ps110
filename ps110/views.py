@@ -39,3 +39,34 @@ def create_auth(request):
 	else:
 		return HttpResponse('{"error":"missing parameters, could not create user"}', content_type="application/json")
 
+@csrf_exempt
+def facebook_auth(request):
+	if request.POST.get('email') and request.POST.get('id') and request.POST.get('token'):
+		try:
+			user = User.objects.get(username=request.POST.get('email').replace(' ',''))
+		except User.DoesNotExist:
+			user = None
+		if user:
+			jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+			jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+			payload = jwt_payload_handler(user)
+			token = jwt_encode_handler(payload)
+			return HttpResponse('{"token":"'+token+'"}', content_type="application/json")
+		else:
+			graph = facebook.GraphAPI(request.POST.get('token'))
+			data = graph.get_object(request.POST.get('id')+'?fields=id,name,gender,email')
+			if request.POST.get('email') == data['email'] and request.POST.get('id') == data['id']:
+				user = User.objects.create_user(
+					request.POST.get('email'),
+					request.POST.get('email'),
+					request.POST.get('password')
+				)
+				jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+				jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+				payload = jwt_payload_handler(user)
+				token = jwt_encode_handler(payload)
+				return HttpResponse('{"token":"'+token+'"}', content_type="application/json")
+			else:
+				return HttpResponse('{"error":"could not verify facebook auth"}', content_type="application/json")
+	else:
+		return HttpResponse('{"error":"missing parameters, could not create user"}', content_type="application/json")
