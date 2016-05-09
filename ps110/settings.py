@@ -51,6 +51,7 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
+	'debug_toolbar',
 	'corsheaders',
 	'rest_framework.authtoken',
 
