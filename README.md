@@ -13,3 +13,11 @@
 1. Add event.apps.EventConfig to INSTALLED_APPS in settings.py - DONE
 
 2. Add url(r'^event/', include('event.urls')) to your project urls.py - DONE
+
+<h3>API Authentication</h3>
+
+To authenticate with the API one must first obtain a Token by authenticating with your username and password and later use that Token in the header:
+
+1. curl --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json; indent=4" --request POST --data "username=YOURUSERNAME&password=YOURPASSWORD" http://localhost:8000/api-token-auth/
+
+2. curl -X GET http://localhost:8000/api/events/ -H 'Authorization: JWT token-received-in-previous-step'
