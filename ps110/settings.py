@@ -69,6 +69,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
+'corsheaders.middleware.CorsMiddleware',
 	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
