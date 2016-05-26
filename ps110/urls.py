@@ -29,19 +29,6 @@ from django.views.generic.base import RedirectView
 
 from rest_framework_jwt.views import obtain_jwt_token
 
-
-class eventSerializer(serializers.HyperlinkedModelSerializer):
-	class Meta:
-		model = Event
-		fields = ['title', 'description', 'location', 'event_date', 'event_length', 'classroom']
-
-
-
-class EventViewSet(viewsets.ModelViewSet):
-	queryset = Event.objects.all()
-	serializer_class = eventSerializer
-
-
 class classroomSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Classroom
@@ -52,6 +39,22 @@ class classroomSerializer(serializers.HyperlinkedModelSerializer):
 class ClassroomViewSet(viewsets.ModelViewSet):
 	queryset = Classroom.objects.all()
 	serializer_class = classroomSerializer
+
+
+class eventSerializer(serializers.HyperlinkedModelSerializer):
+	classroom = serializers.SlugRelatedField(
+	    many=True,
+	    read_only=True,
+	    slug_field='name'
+	)
+	class Meta:
+		model = Event
+		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'event_date', 'event_length', 'classroom']
+
+class EventViewSet(viewsets.ModelViewSet):
+	queryset = Event.objects.all()
+	serializer_class = eventSerializer
+
 
 
 class parentSerializer(serializers.HyperlinkedModelSerializer):

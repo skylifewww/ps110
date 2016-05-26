@@ -51,7 +51,7 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
-	'debug_toolbar',
+	#'debug_toolbar',
 	'corsheaders',
 	'rest_framework.authtoken',
 
@@ -69,7 +69,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE_CLASSES = [
-'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 	'debug_toolbar.middleware.DebugToolbarMiddleware',
 	'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
