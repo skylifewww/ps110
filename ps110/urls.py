@@ -91,13 +91,13 @@ router.register(r'activitys', ActivityViewSet)
 
 urlpatterns = [
 
-	url(r'^api/register', 'school.views.create_auth'),
+	url(r'^api/register', 'ps110.views.create_auth'),
 
 	url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico')),
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),
     url(r'^admin/', admin.site.urls),
-url(r'^api/facebook_auth', 'school.views.facebook_auth'),
+	url(r'^api/facebook_auth', 'ps110.views.facebook_auth'),
 	url(r'^home/', 'ps110.views.home', name='home'),
 	url('', include('social.apps.django_app.urls', namespace='social')),
 	url('', include('django.contrib.auth.urls', namespace='auth')),
