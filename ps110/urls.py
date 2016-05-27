@@ -22,24 +22,61 @@ from django.contrib import admin
 from . import views
 from event.models import Event
 from event.models import Classroom
-from event.models import Parent
-from event.models import Activity
+
 from rest_framework import routers, serializers, viewsets
 from django.views.generic.base import RedirectView
 
 from rest_framework_jwt.views import obtain_jwt_token
 
+from django.contrib.auth.models import User
+
+import django_filters
+from rest_framework import filters
+
+from rest_framework.decorators import detail_route, list_route
+from rest_framework.response import Response
+
+class userSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
+
+
 class classroomSerializer(serializers.HyperlinkedModelSerializer):
+
 	class Meta:
 		model = Classroom
 		fields = ['name', 'teacher_name', 'teacher_email']
-
-
 
 class ClassroomViewSet(viewsets.ModelViewSet):
 	queryset = Classroom.objects.all()
 	serializer_class = classroomSerializer
 
+	@detail_route(methods=['get'])
+	def toggle(self, request, pk=None):
+	    obj = self.get_object()
+	    user = request.user
+	    if user.is_anonymous():
+	        raise PermissionDenied
+	    if user in obj.subscribers.all():
+	        obj.subscribers.remove(user)
+	        member = False
+	    else:
+	        obj.subscribers.add(user)
+	        member = True
+	    return Response({'member': member})
+ 
+ 	@detail_route(methods=['get'])
+	def check(self, request, pk=None):
+	    obj = self.get_object()
+	    user = request.user
+	    if user.is_anonymous():
+	        raise PermissionDenied
+	    if user in obj.subscribers.all():
+	        member = True
+	    else:
+	        member = False
+	    return Response({'member': member})
 
 class eventSerializer(serializers.HyperlinkedModelSerializer):
 	classroom = serializers.SlugRelatedField(
@@ -56,35 +93,9 @@ class EventViewSet(viewsets.ModelViewSet):
 	serializer_class = eventSerializer
 
 
-
-class parentSerializer(serializers.HyperlinkedModelSerializer):
-	class Meta:
-		model = Parent
-		fields = ['name', 'phone', 'child_name', 'classrooms', 'created']
-
-
-
-class ParentViewSet(viewsets.ModelViewSet):
-	queryset = Parent.objects.all()
-	serializer_class = parentSerializer
-
-
-class activitySerializer(serializers.HyperlinkedModelSerializer):
-	class Meta:
-		model = Activity
-		fields = ['user', 'created', 'event']
-
-
-
-class ActivityViewSet(viewsets.ModelViewSet):
-	queryset = Activity.objects.all()
-	serializer_class = activitySerializer
-
 router = routers.DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'classrooms', ClassroomViewSet)
-router.register(r'parents', ParentViewSet)
-router.register(r'activitys', ActivityViewSet)
 
 
 
@@ -92,7 +103,6 @@ router.register(r'activitys', ActivityViewSet)
 urlpatterns = [
 
 	url(r'^api/register', 'ps110.views.create_auth'),
-
 	url(r'^favicon\.ico$', RedirectView.as_view(url='/static/favicon.ico')),
 	url(r'^resetpassword/passwordsent/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
 	url(r'^$', views.home, name='home'),

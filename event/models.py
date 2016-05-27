@@ -22,9 +22,12 @@ class Classroom(models.Model):
 	name = models.CharField(max_length=200)
 	teacher_name = models.CharField(max_length=200)
 	teacher_email = models.EmailField(max_length=120)
+
+	subscribers = models.ManyToManyField(User, verbose_name=(u"subscribers"), blank=True, null=True)
+
 	def __str__(self):
-		return self.teacher_email
-		
+		return self.name
+
 class Event(models.Model):
 
 	title = models.CharField(max_length=200)
@@ -44,38 +47,6 @@ class Event(models.Model):
 
 	def __str__(self):
 		return self.title
-
-
-
-class Parent(models.Model):
-
-	name = models.CharField(max_length=200)
-	phone = models.CharField(max_length=200)
-	child_name = models.CharField(max_length=200)
-	classrooms = models.CharField(max_length=200)
-	created = models.DateTimeField(default=timezone.now())
-	def __str__(self):
-		return self.created
-
-class Activity(models.Model):
-
-	user = models.IntegerField(max_length=200)
-	created = models.DateTimeField(default=timezone.now())
-	event = models.CharField(max_length=200)
-	def __str__(self):
-		return self.event
-
-class ActivityForm(forms.ModelForm):
-
-	class Meta:
-		model = Activity
-		fields = ['user', 'created', 'event']
-
-class ParentForm(forms.ModelForm):
-
-	class Meta:
-		model = Parent
-		fields = ['name', 'phone', 'child_name', 'classrooms', 'created']
 
 class ClassroomForm(forms.ModelForm):
 
