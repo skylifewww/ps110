@@ -113,7 +113,7 @@ DATABASES = {
         'NAME': 'ps110',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '192.168.1.3',
+        'HOST': '127.0.0.1',
         #'STORAGE_ENGINE': 'INNODB'
     }
 }
