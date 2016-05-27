@@ -59,3 +59,8 @@ class EventForm(forms.ModelForm):
 	class Meta:
 		model = Event
 		fields = ['title', 'description', 'location', 'event_date', 'event_length', 'classroom']
+
+	def __init__(self, *args, **kwargs):
+		self.fields["classroom"].widget = forms.widgets.CheckboxSelectMultiple()
+		self.fields["classroom"].help_text = ""
+		self.fields["classroom"].queryset = Diet.objects.all()

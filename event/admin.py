@@ -1,9 +1,27 @@
 from django.contrib import admin
+from django import forms
 
 # Register your models here.
+
 from .models import Event
-admin.site.register(Event)
 from .models import Classroom
+
+class EventForm(forms.ModelForm):
+	classroom = forms.ModelMultipleChoiceField(
+	    queryset=Classroom.objects.all(),
+	    widget=forms.CheckboxSelectMultiple)
+
+	class Meta:
+	    model = Event
+	    exclude = []
+
+class EventAdmin(admin.ModelAdmin):
+	form = EventForm
+	def save_m2m(self):
+	    opts = self.cleaned_data['options'].split('\n')
+	    for opt in opts:
+	        self._instance.polloption_set.create(text=opt.strip())
+
+admin.site.register(Event,EventAdmin)
+
 admin.site.register(Classroom)
-
-
