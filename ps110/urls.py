@@ -46,37 +46,38 @@ class classroomSerializer(serializers.HyperlinkedModelSerializer):
 
 	class Meta:
 		model = Classroom
-		fields = ['name', 'teacher_name', 'teacher_email']
+		fields = ['id','name', 'teacher_name', 'teacher_email']
 
 class ClassroomViewSet(viewsets.ModelViewSet):
 	queryset = Classroom.objects.all()
 	serializer_class = classroomSerializer
 
 	@detail_route(methods=['get'])
-	def toggle(self, request, pk=None):
-	    obj = self.get_object()
-	    user = request.user
-	    if user.is_anonymous():
-	        raise PermissionDenied
-	    if user in obj.subscribers.all():
-	        obj.subscribers.remove(user)
-	        member = False
-	    else:
-	        obj.subscribers.add(user)
-	        member = True
-	    return Response({'member': member})
- 
- 	@detail_route(methods=['get'])
-	def check(self, request, pk=None):
-	    obj = self.get_object()
-	    user = request.user
-	    if user.is_anonymous():
-	        raise PermissionDenied
-	    if user in obj.subscribers.all():
-	        member = True
-	    else:
-	        member = False
-	    return Response({'member': member})
+	def subscribe(self, request, pk=None):
+		obj = self.get_object()
+		user = request.user
+		if user.is_anonymous():
+			raise PermissionDenied
+		if user in obj.subscribers.all():
+			print "already"
+		else:
+			obj.subscribers.add(user)
+
+		member = True
+		return Response({'member': member})	
+
+	@detail_route(methods=['get'])
+	def unsubscribe(self, request, pk=None):
+		obj = self.get_object()
+		user = request.user
+		if user.is_anonymous():
+			raise PermissionDenied
+		if user in obj.subscribers.all():
+			obj.subscribers.remove(user)
+		else:
+			print "nothing"
+		member = False
+		return Response({'member': member})	
 
 class eventSerializer(serializers.HyperlinkedModelSerializer):
 	classroom = serializers.SlugRelatedField(
