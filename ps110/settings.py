@@ -113,7 +113,7 @@ DATABASES = {
         'NAME': 'ps110',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
+        'HOST': os.environ.get('MYSQL_HOST'),
         #'STORAGE_ENGINE': 'INNODB'
     }
 }
