@@ -28,6 +28,13 @@ class Classroom(models.Model):
 	def __str__(self):
 		return self.name
 
+class ClassroomForm(forms.ModelForm):
+
+	class Meta:
+		model = Classroom
+		fields = ['name', 'teacher_name', 'teacher_email']
+
+		
 class Event(models.Model):
 
 	title = models.CharField(max_length=200)
@@ -36,7 +43,7 @@ class Event(models.Model):
 	event_date = models.DateTimeField(default=timezone.now())
 	event_length = models.IntegerField(max_length=200)
 	classroom = models.ManyToManyField(Classroom)
-
+	
 	@property
 	def month_name(self):
 	    return self.event_date.strftime("%B")
@@ -48,11 +55,7 @@ class Event(models.Model):
 	def __str__(self):
 		return self.title
 
-class ClassroomForm(forms.ModelForm):
 
-	class Meta:
-		model = Classroom
-		fields = ['name', 'teacher_name', 'teacher_email']
 
 class EventForm(forms.ModelForm):
 

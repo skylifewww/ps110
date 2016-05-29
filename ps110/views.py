@@ -26,6 +26,7 @@ def create_auth(request):
 		except User.DoesNotExist:
 			user = None
 		if user:
+			print user
 			return HttpResponse('{"error":"username already exists"}', content_type="application/json")
 		else:
 			user = User.objects.create_user(
@@ -37,7 +38,9 @@ def create_auth(request):
 			jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 			payload = jwt_payload_handler(user)
 			token = jwt_encode_handler(payload)
-			return HttpResponse(token, content_type="application/json")
+			print token
+			#return HttpResponse(token, content_type="application/json")
+			return HttpResponse('{"token":"'+token+'"}', content_type="application/json")
 	else:
 		return HttpResponse('{"error":"missing parameters, could not create user"}', content_type="application/json")
 

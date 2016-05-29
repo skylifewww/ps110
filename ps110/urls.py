@@ -89,10 +89,23 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 		model = Event
 		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'event_date', 'event_length', 'classroom']
 
+
+
 class EventViewSet(viewsets.ModelViewSet):
 	queryset = Event.objects.all()
 	serializer_class = eventSerializer
 
+	def get_queryset(self):
+	    user = self.request.user
+	    print 'user'
+	    print user
+	    subscriptions = Classroom.objects.filter(subscribers__in=[user.id])
+	    print 'subscriptions'
+	    print subscriptions
+	    events = Event.objects.filter(classroom__in=subscriptions)
+	    print 'events'
+	    print events
+	    return events
 
 router = routers.DefaultRouter()
 router.register(r'events', EventViewSet)
