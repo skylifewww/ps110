@@ -72,6 +72,13 @@ def facebook_auth(request):
 					request.POST.get('email'),
 					request.POST.get('password')
 				)
+				# subscribe the user to the first classroom (EVERYONE)
+				classroom = Classroom.objects.get(id=1)
+				if classroom:
+					print "Adding"
+					classroom.subscribers.add(user)
+				else:
+					print "couldnt find first classroom (everyone)"
 				jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 				jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 				payload = jwt_payload_handler(user)
