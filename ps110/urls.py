@@ -36,6 +36,10 @@ from rest_framework import filters
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
 
+from django.db.models import Q
+
+from datetime import datetime
+
 class userSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -102,7 +106,9 @@ class EventViewSet(viewsets.ModelViewSet):
 	    subscriptions = Classroom.objects.filter(subscribers__in=[user.id])
 	    print 'subscriptions'
 	    print subscriptions
-	    events = Event.objects.filter(classroom__in=subscriptions)
+	    #events = Event.objects.filter(classroom__in=subscriptions)
+	    now = datetime.now()
+	    events = Event.objects.filter(Q(classroom__in=subscriptions,event_date=now.date())|Q(classroom__in=subscriptions,event_date__gt=now.date())).order_by('event_date')
 	    print 'events'
 	    print events
 	    return events
