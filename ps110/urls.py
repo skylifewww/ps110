@@ -91,7 +91,7 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 	)
 	class Meta:
 		model = Event
-		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'event_date', 'event_length', 'classroom']
+		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'start_date', 'env_date', 'event_duration', 'classroom']
 
 
 
