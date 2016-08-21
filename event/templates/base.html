@@ -15,6 +15,18 @@
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+        <style>
+            body {
+                background: url('/static/img/icon.png') no-repeat #7731ba;
+                background-size: 300px;
+                background-position: 50% 100px
+            }
+            .left-inner-addon {
+                color: #7731ba;
+            }
+        </style>
+
         {% block css %}{% endblock %}
         {% block js %}{% endblock %}
     </head>
@@ -26,6 +38,10 @@
         {% block navbar %}{% endblock %}
         {% block content %}{% endblock %}
 
+    <div style="position: absolute;bottom: 10px;right: 10px;">
+    <a href=""><img src="/static/img/googleplay.svg" style="width: 120px"></a>
+    <a href=""><img src="/static/img/appstore.png" style="width: 130px"></a>
+    </div>
 
 </div>
 

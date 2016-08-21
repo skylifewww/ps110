@@ -1,3 +1,6 @@
+
+<h2> The PS110.org Web & API Service </h2>
+
 <h3>How to install & run:</h3>
 
 1. ./manage makemigrations
@@ -5,6 +8,10 @@
 2. ./manage.py migrate
 
 3. ./manage.py createsuperuser
+
+3. export MYSQL_HOST="127.0.0.1"
+
+5. export DJANGO_DEBUG=False (For print messages)
 
 4. ./manage.py runserver
 
