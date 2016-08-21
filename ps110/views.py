@@ -11,6 +11,9 @@ from rest_framework_jwt.settings import api_settings
 
 from event.models import Classroom
 
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+
 @login_required
 def home(request):
 
@@ -19,7 +22,17 @@ def home(request):
 
 @csrf_exempt
 def create_auth(request):
+
 	if request.POST.get('email') and request.POST.get('password'):
+
+		try:
+			validate_email(request.POST.get('email'))
+		except ValidationError as e:
+			return HttpResponse('{"error":"email address is not valid"}', content_type="application/json")
+		else:
+			print "email check passed", request.POST.get('email')
+
+
 		try:
 			user = User.objects.get(username=request.POST.get('email').replace(' ',''))
 		except User.DoesNotExist:

@@ -1,5 +1,7 @@
 
-<h2> The PS110.org Web & API Service </h2>
+<h2> ps110.org Web & API Service </h2>
+
+
 
 <h3>How to install & run:</h3>
 
