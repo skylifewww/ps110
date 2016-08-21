@@ -25,7 +25,7 @@ SECRET_KEY = 'hs#bepf9bx368co!*sii%z#!#s%uy3f8$bi))2d%tk=q6mmnpx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
