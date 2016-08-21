@@ -91,7 +91,7 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 	)
 	class Meta:
 		model = Event
-		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'start_date', 'env_date', 'event_duration', 'classroom']
+		fields = ['month_name','day_number','day_name','title', 'description', 'location', 'start_date', 'end_date', 'event_duration', 'classroom']
 
 
 
@@ -108,7 +108,7 @@ class EventViewSet(viewsets.ModelViewSet):
 	    print subscriptions
 	    #events = Event.objects.filter(classroom__in=subscriptions)
 	    now = datetime.now()
-	    events = Event.objects.filter(Q(classroom__in=subscriptions,event_date=now.date())|Q(classroom__in=subscriptions,event_date__gt=now.date())).order_by('event_date')
+	    events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
 	    print 'events'
 	    print events
 	    return events
