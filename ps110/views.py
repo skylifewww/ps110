@@ -14,12 +14,17 @@ from event.models import Classroom
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
+"""
+Home - Currently a test page
+"""
 @login_required
 def home(request):
-
 	context = RequestContext(request, {'user': request.user})
 	return render_to_response('home.html', context_instance=context)
 
+"""
+API Create new user
+"""
 @csrf_exempt
 def create_auth(request):
 
@@ -49,20 +54,21 @@ def create_auth(request):
 			# subscribe the user to the first classroom (EVERYONE)
 			classroom = Classroom.objects.get(id=1)
 			if classroom:
-				print "Adding"
 				classroom.subscribers.add(user)
 			else:
-				print "couldnt find first classroom (everyone)"
+				pass
+
 			jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 			jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 			payload = jwt_payload_handler(user)
 			token = jwt_encode_handler(payload)
-			print token
-			#return HttpResponse(token, content_type="application/json")
 			return HttpResponse('{"token":"'+token+'"}', content_type="application/json")
 	else:
 		return HttpResponse('{"error":"missing parameters, could not create user"}', content_type="application/json")
 
+"""
+API Create new user via facebook
+"""
 @csrf_exempt
 def facebook_auth(request):
 	if request.POST.get('email') and request.POST.get('id') and request.POST.get('token'):
