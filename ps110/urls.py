@@ -1,50 +1,43 @@
-"""ps110 URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-
-, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url, include
-
-
 from django.contrib import admin
 from . import views
 from event.models import Event
 from event.models import Classroom
-
 from rest_framework import routers, serializers, viewsets
 from django.views.generic.base import RedirectView
-
 from rest_framework_jwt.views import obtain_jwt_token
-
 from django.contrib.auth.models import User
-
 import django_filters
 from rest_framework import filters
-
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.response import Response
-
 from django.db.models import Q
-
 from datetime import datetime
+
+
+
+
+
+
+
+"""
+User Results - For relationships
+"""
 
 class userSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username']
 
+
+
+
+
+
+
+"""
+Classroom
+"""
 
 class classroomSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -95,6 +88,14 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
+
+
+
+
+"""
+Event
+"""
+
 class EventViewSet(viewsets.ModelViewSet):
 	queryset = Event.objects.all()
 	serializer_class = eventSerializer
@@ -106,19 +107,23 @@ class EventViewSet(viewsets.ModelViewSet):
 	    subscriptions = Classroom.objects.filter(subscribers__in=[user.id])
 	    print 'subscriptions'
 	    print subscriptions
-	    #events = Event.objects.filter(classroom__in=subscriptions)
 	    now = datetime.now()
 	    events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
 	    print 'events'
 	    print events
 	    return events
 
+
+
+
+
+"""
+Routing (URL) Configuration
+"""
+
 router = routers.DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'classrooms', ClassroomViewSet)
-
-
-
 
 urlpatterns = [
 

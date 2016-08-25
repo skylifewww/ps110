@@ -1,21 +1,39 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django import forms
 from jsonfield import JSONField
 from django.utils import timezone
-
-# Create your models here.
 from django.contrib.auth.models import AbstractUser, User
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+
+
+
+
+
+"""
+Create a new token when a user is created
+"""
+
 @receiver(post_save, sender=User)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
 	if created:
 		Token.objects.create(user=instance)
+
+
+
+
+
+
+
+
+
+"""
+Classroom Model
+"""
 
 class Classroom(models.Model):
 
@@ -28,13 +46,29 @@ class Classroom(models.Model):
 	def __str__(self):
 		return self.name
 
+"""
+Classroom Form
+"""
+
 class ClassroomForm(forms.ModelForm):
 
 	class Meta:
 		model = Classroom
 		fields = ['name', 'teacher_name', 'teacher_email']
 
-		
+
+
+
+
+
+
+
+
+
+"""
+Event Model
+"""
+
 class Event(models.Model):
 
 	title = models.CharField(max_length=200)
@@ -59,7 +93,9 @@ class Event(models.Model):
 	def __str__(self):
 		return self.title
 
-
+"""
+Event Form
+"""
 
 class EventForm(forms.ModelForm):
 
