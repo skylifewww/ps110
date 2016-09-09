@@ -34,7 +34,7 @@ from django.conf import settings
 
 class Command(BaseCommand):
     help = 'Example command taking an argument from the command line and with access to model '
-
+    flags = None
     def get_credentials(self):
         """Gets valid user credentials from storage.
 
