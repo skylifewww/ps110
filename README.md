@@ -33,3 +33,6 @@ To authenticate with the API one must first obtain a Token by authenticating wit
 
 To manage your data login to your admin account on <a href="http://ps110.org/admin">ps110.org/admin</a>.
 
+<h3> Google Calendar </h3>
+
+A Django Admin Command is executed via cron to fetch events from the PS 110 PTA Google Calendar. The script is executed every day at midnight, EST.
