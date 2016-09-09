@@ -57,8 +57,8 @@ class Command(BaseCommand):
             flow.user_agent = APPLICATION_NAME
             if flags:
                 credentials = tools.run_flow(flow, store, flags)
-            else: 
-            credentials = tools.run(flow, store)
+            else:
+                credentials = tools.run(flow, store)
             print('Storing credentials to ' + credential_path)
         return credentials
 
