@@ -1,0 +1,1 @@
+image error...Caught exception in hbd::Controller::Image->convert_image "cannot load image '/Users/tty/workspace/hbd/root/static/u/shop/5597/tb1xuehmpxxxxcfxfxxyxgcgpxx_m2ss2j.jpg' at /Library/Perl/5.18/Catalyst/Controller/Imager.pm line 469."
