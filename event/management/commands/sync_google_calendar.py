@@ -21,6 +21,13 @@ from oauth2client import tools
 
 import datetime
 
+try:
+    import argparse
+    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+except ImportError:
+    flags = None
+
+
 from event.models import Event
 
 # If modifying these scopes, delete your previously saved credentials
@@ -28,8 +35,6 @@ from event.models import Event
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
-
-flags = {}
 
 os.environ['DJANGO_SETTINGS_MODULE'] = ''
 from django.conf import settings
