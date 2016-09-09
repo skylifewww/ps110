@@ -29,12 +29,14 @@ SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar API Python Quickstart'
 
+flags = {}
+
 os.environ['DJANGO_SETTINGS_MODULE'] = ''
 from django.conf import settings
 
 class Command(BaseCommand):
     help = 'Example command taking an argument from the command line and with access to model '
-    flags = {}
+
     def get_credentials(self):
         """Gets valid user credentials from storage.
 
