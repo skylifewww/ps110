@@ -21,12 +21,13 @@ from oauth2client import tools
 
 import datetime
 
-try:
-    import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-except ImportError:
-    flags = None
+# try:
+#     import argparse
+#     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+# except ImportError:
+#     flags = None
 
+flags = None
 
 from event.models import Event
 
