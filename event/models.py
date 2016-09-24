@@ -73,8 +73,6 @@ class Event(models.Model):
 
 	start_date = models.DateTimeField(default=timezone.now())
 	end_date = models.DateTimeField(default="", null=True, blank=True, verbose_name=(u"End Date (Optional)"))
-	event_duration = models.CharField(max_length=200, null=True, blank=True,verbose_name='Duration (optional)')
-
 
 	classroom = models.ManyToManyField(Classroom)
 
