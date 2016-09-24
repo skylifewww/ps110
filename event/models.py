@@ -8,11 +8,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-
-
-
-
-
+from datetime import datetime
 
 """
 Create a new token when a user is created
@@ -81,7 +77,14 @@ class Event(models.Model):
 
 
 	classroom = models.ManyToManyField(Classroom)
-	
+
+	def days_hours_and_minutes(self):
+		date_format = "%Y-%m-%d %H:%M:%S"
+		a = self.start_date
+		b = self.end_date
+		td = b - a
+		return td.days, td.seconds // 3600, (td.seconds // 60) % 60
+
 	@property
 	def month_name(self):
 	    return self.start_date.strftime("%B")
