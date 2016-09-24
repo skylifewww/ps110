@@ -88,6 +88,9 @@ class Event(models.Model):
 	def end_time(self):
 		return self.end_date.strftime("%I:%M %p")
 
+	def event_duration(self):
+		return None
+
 	@property
 	def month_name(self):
 	    return self.start_date.strftime("%B")
