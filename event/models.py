@@ -77,11 +77,16 @@ class Event(models.Model):
 	classroom = models.ManyToManyField(Classroom)
 
 	def days_hours_and_minutes(self):
-		date_format = "%Y-%m-%d %H:%M:%S"
 		a = self.start_date
 		b = self.end_date
 		td = b - a
 		return td.days, td.seconds // 3600, (td.seconds // 60) % 60
+
+	def start_time(self):
+		return self.start_date.strftime("%I:%M %p")
+
+	def end_time(self):
+		return self.end_date.strftime("%I:%M %p")
 
 	@property
 	def month_name(self):
@@ -102,7 +107,7 @@ class EventForm(forms.ModelForm):
 
 	class Meta:
 		model = Event
-		fields = ['title', 'description', 'location', 'end_date', 'start_date', 'event_duration', 'classroom']
+		fields = ['title', 'description', 'location', 'end_date', 'start_date', 'classroom']
 
 	def __init__(self, *args, **kwargs):
 		self.fields["classroom"].widget = forms.widgets.CheckboxSelectMultiple()
