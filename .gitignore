@@ -8,3 +8,4 @@
 */.DS_Store
 */*/.DS_Store
 *.sql
+event/migrations/0002*
