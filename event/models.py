@@ -87,7 +87,7 @@ class Event(models.Model):
 	# 	return td.days, td.seconds // 3600, (td.seconds // 60) % 60
 
 	def days_hours_and_minutes(self):
-		print "str(self.start_date)", str(self.start_date)
+		#print "str(self.start_date)", str(self.start_date)
 		try:
 			a = datetime.datetime.strptime(str(self.start_date).replace('+00:00',''), '%Y-%m-%dT%H:%M:%S') - datetime.timedelta(days=1)
 		except ValueError:

@@ -21,6 +21,9 @@ from oauth2client import tools
 
 import datetime
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # try:
 #     import argparse
 #     flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
@@ -156,14 +159,14 @@ class Command(BaseCommand):
             event.source = 'kathleen1'
             event.save()
 
-            print(event.days_hours_and_minutes())
+            #print(event.days_hours_and_minutes())
 
             # check for future dates that we need to add
             if event.days_hours_and_minutes()[0] > 1:
                 day = 1
                 while day < event.days_hours_and_minutes()[0]:
-                    print("****88888*****\t****\n\n\n\n")
-                    day += 1
+                    print("****88888*****\t****")
+                    
                     event.pk = None
                     # we add one day to start_date
                     start_date = None
@@ -175,7 +178,7 @@ class Command(BaseCommand):
                         except ValueError:
                             start_date = None
 
-                    print("start_date", start_date)
+                    #print("start_date", start_date)
                     event.start_date = start_date
 
                     # we remove end date
@@ -183,5 +186,6 @@ class Command(BaseCommand):
                     event.save()
                     event.classroom.add(1)
 
+                    
 
         print("finish")
