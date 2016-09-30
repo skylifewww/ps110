@@ -82,28 +82,11 @@ class Command(BaseCommand):
         credentials = self.get_credentials()
         http = credentials.authorize(httplib2.Http())
         service = discovery.build('calendar', 'v3', http=http)
-
-        now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-
-        # print('Getting list of calendars')
-        # page_token = None
-
-        # while True:
-        # 	calendar_list = service.calendarList().list(pageToken=page_token).execute()
-        # 	print("c",calendar_list)
-        # 	break
-
-            # for calendar_list_entry in calendar_list['items']:
-            # 	pass
-            # 	print calendar_list_entry['summary']
-
-            # page_token = calendar_list.get('nextPageToken')
-            # if not page_token:
-            # 	break
-        print('Removing existing events for kathleen1')            
+        now = datetime.datetime.utcnow().isoformat() + 'Z'
+        
+        # delete existing events for this source
         Event.objects.filter(source='kathleen1').delete()
-
-        print('Getting the upcoming events for kathleen1')
+        
         eventsResult = service.events().list(
             calendarId='ps110pta.org_9cp0mb9jp5724em646ce7teark@group.calendar.google.com', timeMin=now, maxResults=1000, singleEvents=True,
             orderBy='startTime').execute()
@@ -111,14 +94,13 @@ class Command(BaseCommand):
 
         if not events:
             print('No upcoming events found.')
+        
         for event in events:
-            #print("event", event)
 
             """ GET EVENT START DATE """
             start = event['start'].get('dateTime', event['start'].get('date'))
             if len(start) < 15:
                 start = start + " 00:00:00"
-            # strip timezone in date strings
             if start[-6:][0] == '-' and start[-6:][3] == ':':
                 start = start[:-6]
 
@@ -159,16 +141,11 @@ class Command(BaseCommand):
             event.source = 'kathleen1'
             event.save()
 
-            #print(event.days_hours_and_minutes())
-
-            # check for future dates that we need to add
+            # create additional entries for this event to account for additional days coverage
             if event.days_hours_and_minutes()[0] > 1:
                 day = 1
-                while day < event.days_hours_and_minutes()[0]:
-                    print("****88888*****\t****")
-                    
+                while day < event.days_hours_and_minutes()[0]:              
                     event.pk = None
-                    # we add one day to start_date
                     start_date = None
                     try:
                         start_date = datetime.datetime.strptime(str(event.start_date).replace('+00:00',''), '%Y-%m-%dT%H:%M:%S') + datetime.timedelta(days=1)
@@ -178,14 +155,10 @@ class Command(BaseCommand):
                         except ValueError:
                             start_date = None
 
-                    #print("start_date", start_date)
                     event.start_date = start_date
-
-                    # we remove end date
-                    #event.end_date = None
                     event.save()
                     event.classroom.add(1)
 
                     
 
-        print("finish")
+        print("finished")
