@@ -91,7 +91,6 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-
 """
 Event
 """
@@ -108,13 +107,21 @@ class EventViewSet(viewsets.ModelViewSet):
 	    print 'subscriptions'
 	    print subscriptions
 	    now = datetime.now()
-	    events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
+	    #events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
+	    events = Event.objects.filter(Q(classroom__in=subscriptions,end_date=now.date())|Q(classroom__in=subscriptions,end_date__gt=now.date())).order_by('start_date')
 	    print 'events'
 	    print events
 	    return events
 
 
 
+	# def list(self, request):
+	#     # Note the use of `get_queryset()` instead of `self.queryset`
+	#     queryset = self.get_queryset()
+	#     serializer = eventSerializer(queryset, many=True)
+	#     response = Response(serializer.data)
+	#     response["created_on"] = datetime.today()
+	#     return response
 
 
 """

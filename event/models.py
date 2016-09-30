@@ -8,7 +8,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-from datetime import datetime
+#from datetime import datetime
+import datetime
 
 """
 Create a new token when a user is created
@@ -71,19 +72,49 @@ class Event(models.Model):
 	description = models.TextField(max_length=2200)
 	location = models.CharField(max_length=200, null=True, blank=True, verbose_name=(u"Where is this taking place? (Optional)"))
 
+	# where we pulled this from
+	source = models.CharField(max_length=200,null=True, blank=True, default='pta')
+
 	start_date = models.DateTimeField(default=timezone.now())
 	end_date = models.DateTimeField(default="", null=True, blank=True, verbose_name=(u"End Date (Optional)"))
 
 	classroom = models.ManyToManyField(Classroom)
 
+	# def days_hours_and_minutes(self):
+	# 	a = self.start_date
+	# 	b = self.end_date
+	# 	td = b - a
+	# 	return td.days, td.seconds // 3600, (td.seconds // 60) % 60
+
 	def days_hours_and_minutes(self):
-		a = self.start_date
-		b = self.end_date
-		td = b - a
-		return td.days, td.seconds // 3600, (td.seconds // 60) % 60
+		print "str(self.start_date)", str(self.start_date)
+		try:
+			a = datetime.datetime.strptime(str(self.start_date).replace('+00:00',''), '%Y-%m-%dT%H:%M:%S') - datetime.timedelta(days=1)
+		except ValueError:
+			try:
+				a = datetime.datetime.strptime(str(self.start_date).replace('+00:00',''), '%Y-%m-%d %H:%M:%S') - datetime.timedelta(days=1)
+			except ValueError:
+				print "SUPER ERROR\tXXX\tXXXX\n\n"
+				a = None
+		try:
+			b = datetime.datetime.strptime(str(self.end_date).replace('+00:00',''), '%Y-%m-%dT%H:%M:%S') - datetime.timedelta(days=1)
+		except ValueError:
+			try:
+				b = datetime.datetime.strptime(str(self.end_date).replace('+00:00',''), '%Y-%m-%d %H:%M:%S') - datetime.timedelta(days=1)
+			except ValueError:
+				b = None
+
+		if b and a:
+			td = b - a
+			return td.days, td.seconds // 3600, (td.seconds // 60) % 60
+		else:
+			return None
 
 	def start_time(self):
 		return self.start_date.strftime("%I:%M %p")
+
+	# def today(self):
+	# 	return datetime.today()
 
 	def end_time(self):
 		return self.end_date.strftime("%I:%M %p")
@@ -100,7 +131,7 @@ class Event(models.Model):
 	    return self.start_date.strftime("%A")
 
 	def __str__(self):
-		return self.title
+		return str(self.title) + ' - ' + str(self.start_date) + ' - ' + str(self.end_date)
 
 """
 Event Form

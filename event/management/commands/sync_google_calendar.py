@@ -97,9 +97,10 @@ class Command(BaseCommand):
             # page_token = calendar_list.get('nextPageToken')
             # if not page_token:
             # 	break
+        print('Removing existing events for kathleen1')            
+        Event.objects.filter(source='kathleen1').delete()
 
-
-        print('Getting the upcoming 10 events')
+        print('Getting the upcoming events for kathleen1')
         eventsResult = service.events().list(
             calendarId='ps110pta.org_9cp0mb9jp5724em646ce7teark@group.calendar.google.com', timeMin=now, maxResults=1000, singleEvents=True,
             orderBy='startTime').execute()
@@ -113,7 +114,7 @@ class Command(BaseCommand):
             """ GET EVENT START DATE """
             start = event['start'].get('dateTime', event['start'].get('date'))
             if len(start) < 15:
-                start = start + " 08:00:00"
+                start = start + " 00:00:00"
             # strip timezone in date strings
             if start[-6:][0] == '-' and start[-6:][3] == ':':
                 start = start[:-6]
@@ -122,9 +123,18 @@ class Command(BaseCommand):
             """ GET EVENT END DATE """
             end = event['end'].get('dateTime', event['end'].get('date'))
             if len(end) < 15:
-                end = end + " 08:00:00"
+                end = end + " 00:00:00"
             if end[-6:][0] == '-' and end[-6:][3] == ':':
-                end = end[:-6]
+                end = end[:-6]        
+
+            # reduce one day from end date     
+            """
+            if 'T' in end:
+                pass
+            else:
+                end = datetime.datetime.strptime(end, '%Y-%m-%d %H:%M:%S') - datetime.timedelta(days=1)
+            """
+
 
             """ GET EVENT DESCRIPTION """
             desc = ''
@@ -133,7 +143,7 @@ class Command(BaseCommand):
             except KeyError:
                 pass
 
-            print("LLLLL",start, event['summary'], desc)
+            print("** EVENT **",start, event['summary'], desc, " start", start, "end", end, event['end'])
 
             try:
                 event = Event.objects.get(location='', end_date=end, start_date=start, title=event['summary'])
@@ -143,6 +153,35 @@ class Command(BaseCommand):
             event.description = desc
             # add EVERYONE
             event.classroom.add(1)
+            event.source = 'kathleen1'
             event.save()
+
+            print(event.days_hours_and_minutes())
+
+            # check for future dates that we need to add
+            if event.days_hours_and_minutes()[0] > 1:
+                day = 1
+                while day < event.days_hours_and_minutes()[0]:
+                    print("****88888*****\t****\n\n\n\n")
+                    day += 1
+                    event.pk = None
+                    # we add one day to start_date
+                    start_date = None
+                    try:
+                        start_date = datetime.datetime.strptime(str(event.start_date).replace('+00:00',''), '%Y-%m-%dT%H:%M:%S') + datetime.timedelta(days=1)
+                    except ValueError:
+                        try:
+                            start_date = datetime.datetime.strptime(str(event.start_date).replace('+00:00',''), '%Y-%m-%d %H:%M:%S') + datetime.timedelta(days=1)
+                        except ValueError:
+                            start_date = None
+
+                    print("start_date", start_date)
+                    event.start_date = start_date
+
+                    # we remove end date
+                    #event.end_date = None
+                    event.save()
+                    event.classroom.add(1)
+
 
         print("finish")
