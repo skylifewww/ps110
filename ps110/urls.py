@@ -91,10 +91,6 @@ class eventSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 """
 Event
 """
@@ -111,12 +107,8 @@ class EventViewSet(viewsets.ModelViewSet):
 	    print 'subscriptions'
 	    print subscriptions
 	    now = datetime.now()
-<<<<<<< HEAD
 	    #events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
 	    events = Event.objects.filter(Q(classroom__in=subscriptions,end_date=now.date())|Q(classroom__in=subscriptions,end_date__gt=now.date())).order_by('start_date')
-=======
-	    events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 	    print 'events'
 	    print events
 	    return events
@@ -131,14 +123,6 @@ class EventViewSet(viewsets.ModelViewSet):
 	#     response["created_on"] = datetime.today()
 	#     return response
 
-
-"""
-Routing (URL) Configuration
-"""
-
-router = routers.DefaultRouter()
-router.register(r'events', EventViewSet)
-router.register(r'classrooms', ClassroomViewSet)
 
 """
 Routing (URL) Configuration

@@ -8,12 +8,8 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-<<<<<<< HEAD
 #from datetime import datetime
 import datetime
-=======
-from datetime import datetime
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 
 """
 Create a new token when a user is created
@@ -76,18 +72,14 @@ class Event(models.Model):
 	description = models.TextField(max_length=2200)
 	location = models.CharField(max_length=200, null=True, blank=True, verbose_name=(u"Where is this taking place? (Optional)"))
 
-<<<<<<< HEAD
 	# where we pulled this from
 	source = models.CharField(max_length=200,null=True, blank=True, default='pta')
 
-=======
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 	start_date = models.DateTimeField(default=timezone.now())
 	end_date = models.DateTimeField(default="", null=True, blank=True, verbose_name=(u"End Date (Optional)"))
 
 	classroom = models.ManyToManyField(Classroom)
 
-<<<<<<< HEAD
 	# def days_hours_and_minutes(self):
 	# 	a = self.start_date
 	# 	b = self.end_date
@@ -117,23 +109,13 @@ class Event(models.Model):
 			return td.days, td.seconds // 3600, (td.seconds // 60) % 60
 		else:
 			return None
-=======
-	def days_hours_and_minutes(self):
-		a = self.start_date
-		b = self.end_date
-		td = b - a
-		return td.days, td.seconds // 3600, (td.seconds // 60) % 60
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 
 	def start_time(self):
 		return self.start_date.strftime("%I:%M %p")
 
-<<<<<<< HEAD
 	# def today(self):
 	# 	return datetime.today()
 
-=======
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 	def end_time(self):
 		return self.end_date.strftime("%I:%M %p")
 
@@ -149,11 +131,7 @@ class Event(models.Model):
 	    return self.start_date.strftime("%A")
 
 	def __str__(self):
-<<<<<<< HEAD
 		return str(self.title) + ' - ' + str(self.start_date) + ' - ' + str(self.end_date)
-=======
-		return self.title
->>>>>>> 34e4f98733716ee54053c290f8aba7c0fc56189b
 
 """
 Event Form
