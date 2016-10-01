@@ -101,16 +101,9 @@ class EventViewSet(viewsets.ModelViewSet):
 
 	def get_queryset(self):
 	    user = self.request.user
-	    print 'user'
-	    print user
 	    subscriptions = Classroom.objects.filter(subscribers__in=[user.id])
-	    print 'subscriptions'
-	    print subscriptions
 	    now = datetime.now()
-	    #events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
-	    events = Event.objects.filter(Q(classroom__in=subscriptions,end_date=now.date())|Q(classroom__in=subscriptions,end_date__gt=now.date())).order_by('start_date')
-	    print 'events'
-	    print events
+	    events = Event.objects.filter(Q(classroom__in=subscriptions,start_date=now.date())|Q(classroom__in=subscriptions,start_date__gt=now.date())).order_by('start_date')
 	    return events
 
 
