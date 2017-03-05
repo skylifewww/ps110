@@ -9,7 +9,7 @@
 
 <h3> Dev Guide - How to install & run:</h3>
 
-1. ./manage makemigrations
+1. ./manage.py makemigrations
 
 2. ./manage.py migrate
 
