@@ -7,8 +7,8 @@ from .models import Classroom
 
 class EventForm(forms.ModelForm):
 	
-	start_date = forms.DateTimeField(required=True)
-	end_date = forms.DateTimeField(required=True)
+	# start_date = forms.DateTimeField(required=True)
+	# end_date = forms.DateTimeField(required=True)
 
 	classroom = forms.ModelMultipleChoiceField(
 	    queryset=Classroom.objects.all(),
