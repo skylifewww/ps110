@@ -75,8 +75,8 @@ class Event(models.Model):
 	# where we pulled this from
 	source = models.CharField(max_length=200,null=True, blank=True, default='pta')
 
-	start_date = models.DateTimeField(default=timezone.now())
-	end_date = models.DateTimeField(default="", null=True, blank=True, verbose_name=(u"End Date (Optional)"))
+	start_date = models.DateTimeField(blank=False, null=False, default=datetime.datetime.now)
+	end_date = models.DateTimeField(blank=False, null=False, default=datetime.datetime.now)
 
 	classroom = models.ManyToManyField(Classroom)
 
